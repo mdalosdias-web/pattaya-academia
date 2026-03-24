@@ -4,9 +4,188 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>PATTAYA — Sistema de Academia</title>
-<script>window.PATTAYA_REDIRECT=true;</script>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0a0a0b;--bg2:#111113;--bg3:#18181b;--border:#2a2a2f;--border2:#3a3a42;--text:#f4f4f5;--text2:#a1a1aa;--text3:#71717a;--accent:#e63946;--green:#22c55e;--yellow:#f59e0b;--red:#ef4444;--blue:#3b82f6;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min-height:100vh;}
+#login-screen{min-height:100vh;display:flex;align-items:center;justify-content:center;background:var(--bg);}
+.login-box{background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:48px 40px;width:380px;}
+.login-logo{font-family:'Bebas Neue',sans-serif;font-size:48px;color:var(--accent);letter-spacing:4px;margin-bottom:4px;}
+.login-sub{font-size:12px;color:var(--text3);letter-spacing:3px;text-transform:uppercase;margin-bottom:40px;}
+.fg{margin-bottom:20px;}
+.fg label{display:block;font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:8px;}
+.fg input,.fg select,.fg textarea{width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:14px;padding:12px 14px;outline:none;}
+.fg input:focus,.fg select:focus{border-color:var(--accent);}
+.fg textarea{resize:vertical;min-height:80px;}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:none;border-radius:8px;cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:500;font-size:14px;padding:12px 20px;transition:all .15s;text-decoration:none;}
+.btn-primary{background:var(--accent);color:#fff;width:100%;}
+.btn-primary:hover{background:#c1121f;}
+.btn-secondary{background:var(--bg3);color:var(--text2);border:1px solid var(--border);}
+.btn-secondary:hover{color:var(--text);}
+.btn-ghost{background:transparent;color:var(--text2);border:1px solid var(--border);}
+.btn-ghost:hover{color:var(--text);}
+.btn-danger{background:rgba(239,68,68,.15);color:var(--red);border:1px solid rgba(239,68,68,.3);}
+.btn-success{background:rgba(34,197,94,.15);color:var(--green);border:1px solid rgba(34,197,94,.3);}
+.btn-sm{padding:7px 14px;font-size:12px;border-radius:6px;}
+.btn-full{width:100%;}
+#app{display:none;min-height:100vh;}
+.sidebar{position:fixed;top:0;left:0;width:220px;height:100vh;background:var(--bg2);border-right:1px solid var(--border);display:flex;flex-direction:column;z-index:100;}
+.sidebar-logo{padding:24px 20px 20px;border-bottom:1px solid var(--border);}
+.sidebar-logo-text{font-family:'Bebas Neue',sans-serif;font-size:32px;color:var(--accent);letter-spacing:4px;line-height:1;}
+.sidebar-logo-sub{font-size:9px;color:var(--text3);letter-spacing:2px;text-transform:uppercase;margin-top:2px;}
+.nav{flex:1;padding:16px 12px;}
+.nav-section{font-size:9px;color:var(--text3);letter-spacing:2px;text-transform:uppercase;padding:0 8px;margin:16px 0 6px;font-weight:600;}
+.nav-item{display:flex;align-items:center;gap:10px;padding:10px;border-radius:8px;cursor:pointer;color:var(--text2);font-size:13px;font-weight:500;transition:all .15s;margin-bottom:2px;border:none;background:none;width:100%;text-align:left;}
+.nav-item:hover{background:var(--bg3);color:var(--text);}
+.nav-item.active{background:rgba(230,57,70,.15);color:var(--accent);}
+.sidebar-user{padding:16px 20px;border-top:1px solid var(--border);display:flex;align-items:center;gap:10px;}
+.user-avatar{width:32px;height:32px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;color:#fff;flex-shrink:0;}
+.main{margin-left:220px;min-height:100vh;}
+.topbar{height:60px;background:var(--bg2);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 28px;gap:16px;position:sticky;top:0;z-index:50;}
+.topbar-title{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:2px;flex:1;}
+.page-content{padding:28px;}
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:16px;margin-bottom:28px;}
+.stat-card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:20px;}
+.stat-label{font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:1.5px;font-weight:600;margin-bottom:8px;}
+.stat-value{font-family:'Bebas Neue',sans-serif;font-size:40px;line-height:1;color:var(--text);}
+.stat-value.green{color:var(--green);}
+.stat-value.red{color:var(--red);}
+.stat-value.yellow{color:var(--yellow);}
+.stat-value.blue{color:var(--blue);}
+.table-wrap{background:var(--bg2);border:1px solid var(--border);border-radius:12px;overflow:hidden;}
+.table-header{padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+.table-header-title{font-weight:600;font-size:14px;flex:1;}
+.search-input{background:var(--bg3);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;padding:8px 12px;outline:none;width:220px;}
+.search-input:focus{border-color:var(--accent);}
+.filter-btns{display:flex;gap:6px;}
+.filter-btn{padding:6px 12px;border-radius:6px;font-size:12px;font-weight:500;cursor:pointer;border:1px solid var(--border);background:transparent;color:var(--text2);transition:all .15s;}
+.filter-btn.active{background:var(--accent);color:#fff;border-color:var(--accent);}
+.filter-btn:hover:not(.active){color:var(--text);}
+table{width:100%;border-collapse:collapse;}
+th{padding:12px 20px;text-align:left;font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:1.5px;font-weight:600;border-bottom:1px solid var(--border);}
+td{padding:14px 20px;font-size:13px;border-bottom:1px solid var(--border);vertical-align:middle;}
+tr:last-child td{border-bottom:none;}
+tr:hover td{background:var(--bg3);}
+.badge{display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:20px;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;}
+.badge::before{content:'';width:6px;height:6px;border-radius:50%;background:currentColor;}
+.badge-ativo{background:rgba(34,197,94,.15);color:var(--green);}
+.badge-vencido{background:rgba(239,68,68,.15);color:var(--red);}
+.badge-vencendo{background:rgba(245,158,11,.15);color:var(--yellow);}
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);display:none;align-items:center;justify-content:center;z-index:200;padding:20px;}
+.modal-overlay.open{display:flex;}
+.modal{background:var(--bg2);border:1px solid var(--border);border-radius:16px;width:100%;max-width:560px;max-height:90vh;overflow-y:auto;padding:28px;}
+.modal-title{font-family:'Bebas Neue',sans-serif;font-size:26px;letter-spacing:2px;margin-bottom:24px;}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.modal-footer{display:flex;gap:10px;justify-content:flex-end;margin-top:24px;padding-top:20px;border-top:1px solid var(--border);}
+.detail-header{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:24px;margin-bottom:20px;display:flex;gap:20px;align-items:flex-start;}
+.detail-avatar{width:60px;height:60px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:24px;color:#fff;flex-shrink:0;}
+.detail-name{font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:2px;}
+.info-card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:20px;}
+.info-card-title{font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:1.5px;font-weight:600;margin-bottom:14px;}
+.info-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--border);}
+.info-row:last-child{border-bottom:none;}
+.info-key{font-size:12px;color:var(--text2);}
+.info-val{font-size:13px;font-weight:500;}
+.empty-state{text-align:center;padding:48px 20px;color:var(--text3);}
+.breadcrumb{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--text3);margin-bottom:20px;cursor:pointer;}
+.toast{position:fixed;bottom:24px;right:24px;background:var(--bg3);border:1px solid var(--border2);border-radius:10px;padding:14px 20px;font-size:13px;z-index:999;display:none;align-items:center;gap:10px;min-width:240px;}
+.toast.show{display:flex;}
+.toast.success{border-color:var(--green);}
+.toast.error{border-color:var(--red);}
+.alert-warn{padding:14px 18px;border-radius:10px;margin-bottom:12px;font-size:13px;background:rgba(245,158,11,.12);border:1px solid rgba(245,158,11,.3);color:#f59e0b;}
+.alert-red{padding:14px 18px;border-radius:10px;margin-bottom:12px;font-size:13px;background:rgba(239,68,68,.12);border:1px solid rgba(239,68,68,.3);color:var(--red);}
+</style>
 </head>
 <body>
-<p>Carregando PATTAYA...</p>
+<div id="login-screen">
+  <div class="login-box">
+    <div class="login-logo">PATTAYA</div>
+    <div class="login-sub">Sistema de Academia</div>
+    <div class="fg"><label>Email</label><input type="email" id="login-email" placeholder="admin@pattaya.com" value="admin@pattaya.com"></div>
+    <div class="fg"><label>Senha</label><input type="password" id="login-pass" placeholder="••••••" value="123456"></div>
+    <button class="btn btn-primary" onclick="doLogin()">Entrar</button>
+    <p style="font-size:11px;color:var(--text3);margin-top:16px;text-align:center">Demo: admin@pattaya.com / 123456</p>
+  </div>
+</div>
+<div id="app">
+  <div class="sidebar">
+    <div class="sidebar-logo"><div class="sidebar-logo-text">PATTAYA</div><div class="sidebar-logo-sub">Academia de Luta</div></div>
+    <nav class="nav">
+      <div class="nav-section">Principal</div>
+      <button class="nav-item active" onclick="nav('dashboard')" id="nav-dashboard">⚡ Dashboard</button>
+      <div class="nav-section">Alunos</div>
+      <button class="nav-item" onclick="nav('alunos')" id="nav-alunos">👥 Alunos</button>
+      <div class="nav-section">Financeiro</div>
+      <button class="nav-item" onclick="nav('financeiro')" id="nav-financeiro">💰 Financeiro</button>
+    </nav>
+    <div class="sidebar-user">
+      <div class="user-avatar" id="sidebar-avatar">A</div>
+      <div><div style="font-size:12px;font-weight:500" id="sidebar-username">Admin</div><div style="font-size:11px;color:var(--text3)">Administrador</div></div>
+    </div>
+  </div>
+  <div class="main">
+    <div class="topbar"><div class="topbar-title" id="topbar-title">DASHBOARD</div><button class="btn btn-ghost btn-sm" onclick="doLogout()">Sair</button></div>
+    <div class="page-content" id="page-content"></div>
+  </div>
+</div>
+<div class="modal-overlay" id="modal-aluno">
+  <div class="modal">
+    <div class="modal-title" id="modal-aluno-title">NOVO ALUNO</div>
+    <div class="form-row"><div class="fg"><label>Nome Completo *</label><input type="text" id="f-nome"></div><div class="fg"><label>Telefone *</label><input type="text" id="f-tel"></div></div>
+    <div class="form-row"><div class="fg"><label>CPF</label><input type="text" id="f-cpf"></div><div class="fg"><label>Data Nascimento</label><input type="date" id="f-nasc"></div></div>
+    <div class="fg"><label>Endereço</label><input type="text" id="f-end"></div>
+    <div class="form-row"><div class="fg"><label>Data Matrícula *</label><input type="date" id="f-matricula"></div><div class="fg"><label>Validade *</label><input type="date" id="f-validade"></div></div>
+    <div class="fg"><label>Observações</label><textarea id="f-obs"></textarea></div>
+    <div class="modal-footer"><button class="btn btn-ghost" onclick="closeModal('modal-aluno')">Cancelar</button><button class="btn btn-primary" onclick="salvarAluno()">Salvar</button></div>
+  </div>
+</div>
+<div class="modal-overlay" id="modal-pagamento">
+  <div class="modal">
+    <div class="modal-title">LANÇAR PAGAMENTO</div>
+    <div class="fg"><label>Aluno</label><input type="text" id="p-aluno-nome" readonly style="opacity:.7"></div>
+    <div class="form-row"><div class="fg"><label>Valor (R$) *</label><input type="number" id="p-valor" step="0.01" min="0"></div><div class="fg"><label>Data *</label><input type="date" id="p-data"></div></div>
+    <div class="form-row"><div class="fg"><label>Forma *</label><select id="p-forma"><option value="">...</option><option value="pix">PIX</option><option value="dinheiro">Dinheiro</option><option value="cartao">Cartão</option><option value="transferencia">Transferência</option></select></div><div class="fg"><label>Referência</label><input type="text" id="p-ref" placeholder="Março/2026"></div></div>
+    <div class="fg"><label>Observações</label><textarea id="p-obs" style="min-height:60px"></textarea></div>
+    <div class="modal-footer"><button class="btn btn-ghost" onclick="closeModal('modal-pagamento')">Cancelar</button><button class="btn btn-success" onclick="salvarPagamento()">Confirmar</button></div>
+  </div>
+</div>
+<div class="toast" id="toast"><span id="toast-msg"></span></div>
+<script>
+const DB={get:k=>{try{return JSON.parse(localStorage.getItem('pattaya_'+k)||'null')}catch(e){return null}},set:(k,v)=>localStorage.setItem('pattaya_'+k,JSON.stringify(v))};
+function initDB(){if(!DB.get('usuarios'))DB.set('usuarios',[{id:1,nome:'Administrador',email:'admin@pattaya.com',senha:'123456',perfil:'admin'}]);const t=new Date(),fmt=d=>{const x=new Date(d);return x.toISOString().split('T')[0]},add=(n)=>{const x=new Date(t);x.setDate(x.getDate()+n);return fmt(x)};if(!DB.get('alunos'))DB.set('alunos',[{id:1,nome:'Carlos Rodrigues',telefone:'(44) 99811-2233',cpf:'123.456.789-00',data_nascimento:'1995-03-10',endereco:'Rua das Palmeiras, 45',data_matricula:add(-90),observacoes:'Muay Thai - Turma A',validade_ate:add(15),created_at:now(),updated_at:now()},{id:2,nome:'Fernanda Lima',telefone:'(44) 98722-5544',cpf:'234.567.890-11',data_nascimento:'1998-07-22',endereco:'Av. Brasil, 200',data_matricula:add(-60),observacoes:'Jiu-Jitsu - Turma B',validade_ate:add(5),created_at:now(),updated_at:now()},{id:3,nome:'Ricardo Alves',telefone:'(44) 99533-8877',cpf:'345.678.901-22',data_nascimento:'1990-11-05',endereco:'Rua XV, 100',data_matricula:add(-120),observacoes:'Boxe - Turma C',validade_ate:add(-10),created_at:now(),updated_at:now()},{id:4,nome:'Juliana Santos',telefone:'(44) 98644-3311',cpf:'456.789.012-33',data_nascimento:'2001-05-18',endereco:'Rua das Flores, 33',data_matricula:add(-30),observacoes:'Muay Thai',validade_ate:fmt(t),created_at:now(),updated_at:now()}]);if(!DB.get('pagamentos'))DB.set('pagamentos',[{id:1,aluno_id:1,valor:120,forma_pagamento:'pix',data_pagamento:add(-15),vencimento_referencia:'Março/2026',observacoes:'',created_at:now()},{id:2,aluno_id:2,valor:120,forma_pagamento:'dinheiro',data_pagamento:add(-25),vencimento_referencia:'Março/2026',observacoes:'',created_at:now()}]);if(!DB.get('next_aluno_id'))DB.set('next_aluno_id',5);if(!DB.get('next_pag_id'))DB.set('next_pag_id',3);}
+function now(){return new Date().toISOString();}
+function today(){return new Date().toISOString().split('T')[0];}
+function addDays(s,n){const d=new Date(s);d.setDate(d.getDate()+n);return d.toISOString().split('T')[0];}
+function diffDays(a,b){return Math.floor((new Date(a)-new Date(b))/(864e5));}
+function fmtDate(s){if(!s)return'-';const[y,m,d]=s.split('-');return d+'/'+m+'/'+y;}
+function fmtMoney(v){return'R$ '+Number(v).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});}
+function calcStatus(a){const t=today();if(!a.validade_ate)return'vencido';const d=diffDays(a.validade_ate,t);if(d<0)return'vencido';if(d<=7)return'vencendo';return'ativo';}
+function badgeStatus(s){const map={ativo:'badge-ativo',vencido:'badge-vencido',vencendo:'badge-vencendo'};const lbl={ativo:'Ativo',vencido:'Vencido',vencendo:'Vencendo'};return'<span class="badge '+map[s]+'">'+(lbl[s]||s)+'</span>';}
+function fmtForma(f){const m={pix:'PIX',dinheiro:'Dinheiro',cartao:'Cartão',transferencia:'Transferência'};return m[f]||f;}
+let currentUser=null,currentAlunoId=null,editingAlunoId=null,pagAlunoId=null,alunoFiltro='todos',alunoSearch='';
+function doLogin(){const e=document.getElementById('login-email').value.trim(),p=document.getElementById('login-pass').value;const users=DB.get('usuarios')||[];const user=users.find(u=>u.email===e&&u.senha===p);if(!user){alert('Email ou senha incorretos.');return;}currentUser=user;document.getElementById('login-screen').style.display='none';document.getElementById('app').style.display='block';document.getElementById('sidebar-username').textContent=user.nome;document.getElementById('sidebar-avatar').textContent=user.nome.charAt(0).toUpperCase();nav('dashboard');}
+function doLogout(){currentUser=null;document.getElementById('login-screen').style.display='flex';document.getElementById('app').style.display='none';}
+function nav(page,param){document.querySelectorAll('.nav-item').forEach(el=>el.classList.remove('active'));const el=document.getElementById('nav-'+page.split('-')[0]);if(el)el.classList.add('active');const titles={dashboard:'DASHBOARD',alunos:'ALUNOS',financeiro:'FINANCEIRO','aluno-detalhe':'ALUNO'};document.getElementById('topbar-title').textContent=titles[page]||page.toUpperCase();const c=document.getElementById('page-content');if(page==='dashboard')renderDashboard(c);else if(page==='alunos')renderAlunos(c);else if(page==='aluno-detalhe')renderDetalhe(c,param);else if(page==='financeiro')renderFinanceiro(c);}
+function renderDashboard(el){const alunos=DB.get('alunos')||[];const t=today();const total=alunos.length,ativos=alunos.filter(a=>calcStatus(a)==='ativo').length,vencidos=alunos.filter(a=>calcStatus(a)==='vencido').length,hoje=alunos.filter(a=>a.validade_ate===t).length,semana=alunos.filter(a=>{if(!a.validade_ate)return false;const d=diffDays(a.validade_ate,t);return d>=0&&d<=7;}).length;const alertsV=alunos.filter(a=>calcStatus(a)==='vencendo'),alertsX=alunos.filter(a=>calcStatus(a)==='vencido');el.innerHTML='<div class="stats-grid"><div class="stat-card"><div class="stat-label">Total</div><div class="stat-value">'+total+'</div></div><div class="stat-card"><div class="stat-label">Ativos</div><div class="stat-value green">'+ativos+'</div></div><div class="stat-card"><div class="stat-label">Vencidos</div><div class="stat-value red">'+vencidos+'</div></div><div class="stat-card"><div class="stat-label">Vencem Hoje</div><div class="stat-value yellow">'+hoje+'</div></div><div class="stat-card"><div class="stat-label">Próx 7 dias</div><div class="stat-value blue">'+semana+'</div></div></div>'+(alertsV.length?'<div class="alert-warn">⚠ <strong>'+alertsV.length+' aluno(s)</strong> vencendo em breve: '+alertsV.map(a=>'<span style="cursor:pointer;text-decoration:underline" onclick="nav('aluno-detalhe','+a.id+')">'+a.nome+'</span>').join(', ')+'</div>':'')+(alertsX.length?'<div class="alert-red">✕ <strong>'+alertsX.length+' aluno(s)</strong> com mensalidade vencida: '+alertsX.map(a=>'<span style="cursor:pointer;text-decoration:underline" onclick="nav('aluno-detalhe','+a.id+')">'+a.nome+'</span>').join(', ')+'</div>':'')+'<div class="table-wrap"><div class="table-header"><span class="table-header-title">Últimos Alunos</span><button class="btn btn-primary btn-sm" onclick="openModalAluno()">+ Novo Aluno</button></div><table><thead><tr><th>Nome</th><th>Telefone</th><th>Validade</th><th>Status</th><th></th></tr></thead><tbody>'+alunos.slice(-5).reverse().map(a=>'<tr><td><strong>'+a.nome+'</strong></td><td style="color:var(--text2)">'+a.telefone+'</td><td style="font-size:12px">'+fmtDate(a.validade_ate)+'</td><td>'+badgeStatus(calcStatus(a))+'</td><td><button class="btn btn-ghost btn-sm" onclick="nav('aluno-detalhe','+a.id+')">Ver</button></td></tr>').join('')+'</tbody></table></div>';}
+function renderAlunos(el){el.innerHTML='<div class="table-wrap"><div class="table-header"><span class="table-header-title">Alunos</span><input class="search-input" id="search-al" placeholder="Buscar..." value="'+alunoSearch+'" oninput="alunoSearch=this.value;renderAlunosTable()"><div class="filter-btns"><button class="filter-btn '+(alunoFiltro==='todos'?'active':'')+'" onclick="setFiltro('todos')">Todos</button><button class="filter-btn '+(alunoFiltro==='ativo'?'active':'')+'" onclick="setFiltro('ativo')">Ativos</button><button class="filter-btn '+(alunoFiltro==='vencendo'?'active':'')+'" onclick="setFiltro('vencendo')">Vencendo</button><button class="filter-btn '+(alunoFiltro==='vencido'?'active':'')+'" onclick="setFiltro('vencido')">Vencidos</button></div><button class="btn btn-primary btn-sm" onclick="openModalAluno()">+ Novo</button></div><div id="alunos-tbody"></div></div>';renderAlunosTable();}
+function setFiltro(f){alunoFiltro=f;renderAlunos(document.getElementById('page-content'));}
+function renderAlunosTable(){let alunos=DB.get('alunos')||[];const q=alunoSearch.toLowerCase();if(q)alunos=alunos.filter(a=>a.nome.toLowerCase().includes(q)||a.telefone.includes(q));if(alunoFiltro!=='todos')alunos=alunos.filter(a=>calcStatus(a)===alunoFiltro);const el=document.getElementById('alunos-tbody');if(!el)return;if(!alunos.length){el.innerHTML='<div class="empty-state">Nenhum aluno encontrado</div>';return;}el.innerHTML='<table><thead><tr><th>Nome</th><th>Telefone</th><th>Validade</th><th>Status</th><th>Ações</th></tr></thead><tbody>'+alunos.map(a=>'<tr><td><strong style="cursor:pointer" onclick="nav('aluno-detalhe','+a.id+')">'+a.nome+'</strong></td><td style="color:var(--text2);font-size:12px">'+a.telefone+'</td><td style="font-size:12px">'+fmtDate(a.validade_ate)+'</td><td>'+badgeStatus(calcStatus(a))+'</td><td style="display:flex;gap:6px"><button class="btn btn-ghost btn-sm" onclick="nav('aluno-detalhe','+a.id+')">Ver</button><button class="btn btn-ghost btn-sm" onclick="openEditAluno('+a.id+')">Editar</button><button class="btn btn-success btn-sm" onclick="openPagamento('+a.id+')">Pagar</button></td></tr>').join('')+'</tbody></table>';}
+function renderDetalhe(el,id){currentAlunoId=id;const alunos=DB.get('alunos')||[];const a=alunos.find(x=>x.id===id);if(!a){el.innerHTML='<p>Não encontrado.</p>';return;}const pags=(DB.get('pagamentos')||[]).filter(p=>p.aluno_id===id).sort((x,y)=>y.data_pagamento.localeCompare(x.data_pagamento));const st=calcStatus(a);const diff=a.validade_ate?diffDays(a.validade_ate,today()):null;el.innerHTML='<div class="breadcrumb" onclick="nav('alunos')">← Voltar</div><div class="detail-header"><div class="detail-avatar">'+a.nome.charAt(0)+'</div><div style="flex:1"><div class="detail-name">'+a.nome+'</div><div style="color:var(--text2);font-size:13px;margin-top:4px">'+a.telefone+(a.cpf?' · '+a.cpf:'')+'</div><div style="margin-top:10px;display:flex;gap:8px">'+badgeStatus(st)+(diff!==null?'<span style="font-size:12px;color:var(--text2)">'+(diff<0?Math.abs(diff)+' dias vencido':diff===0?'Vence hoje!':'Vence em '+diff+' dias')+'</span>':'')+'</div></div><div style="display:flex;gap:8px"><button class="btn btn-ghost btn-sm" onclick="openEditAluno('+a.id+')">Editar</button><button class="btn btn-success btn-sm" onclick="openPagamento('+a.id+')">+ Pagamento</button><button class="btn btn-danger btn-sm" onclick="excluirAluno('+a.id+')">Excluir</button></div></div><div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px"><div class="info-card"><div class="info-card-title">Dados</div><div class="info-row"><span class="info-key">Nascimento</span><span class="info-val">'+fmtDate(a.data_nascimento||'')+'</span></div><div class="info-row"><span class="info-key">Matrícula</span><span class="info-val">'+fmtDate(a.data_matricula)+'</span></div><div class="info-row"><span class="info-key">Validade</span><span class="info-val">'+fmtDate(a.validade_ate)+'</span></div>'+(a.observacoes?'<div class="info-row"><span class="info-key">Obs.</span><span class="info-val" style="font-size:12px;text-align:right;max-width:60%">'+a.observacoes+'</span></div>':'')+'</div><div class="info-card"><div class="info-card-title">Financeiro</div><div class="info-row"><span class="info-key">Total Pago</span><span class="info-val" style="color:var(--green)">'+fmtMoney(pags.reduce((s,p)=>s+Number(p.valor),0))+'</span></div><div class="info-row"><span class="info-key">Pagamentos</span><span class="info-val">'+pags.length+'</span></div><div class="info-row"><span class="info-key">Último</span><span class="info-val">'+(pags.length?fmtDate(pags[0].data_pagamento):'-')+'</span></div></div></div><div class="table-wrap"><div class="table-header"><span class="table-header-title">Histórico</span></div>'+(pags.length?'<table><thead><tr><th>Data</th><th>Referência</th><th>Forma</th><th>Valor</th></tr></thead><tbody>'+pags.map(p=>'<tr><td style="font-size:12px">'+fmtDate(p.data_pagamento)+'</td><td style="color:var(--text2)">'+( p.vencimento_referencia||'-')+'</td><td>'+fmtForma(p.forma_pagamento)+'</td><td style="font-weight:600;color:var(--green)">'+fmtMoney(p.valor)+'</td></tr>').join('')+'</tbody></table>':'<div class="empty-state">Nenhum pagamento</div>')+'</div>';}
+function renderFinanceiro(el){const pags=(DB.get('pagamentos')||[]).sort((a,b)=>b.data_pagamento.localeCompare(a.data_pagamento));const alunos=DB.get('alunos')||[];const total=pags.reduce((s,p)=>s+Number(p.valor),0);const mes=new Date();const pagsMes=pags.filter(p=>{const d=new Date(p.data_pagamento);return d.getMonth()===mes.getMonth()&&d.getFullYear()===mes.getFullYear();});el.innerHTML='<div class="stats-grid" style="margin-bottom:24px"><div class="stat-card"><div class="stat-label">Mês Atual</div><div class="stat-value green" style="font-size:28px">'+fmtMoney(pagsMes.reduce((s,p)=>s+Number(p.valor),0))+'</div></div><div class="stat-card"><div class="stat-label">Total Geral</div><div class="stat-value blue" style="font-size:28px">'+fmtMoney(total)+'</div></div><div class="stat-card"><div class="stat-label">Pagamentos</div><div class="stat-value">'+pags.length+'</div></div></div><div class="table-wrap"><div class="table-header"><span class="table-header-title">Pagamentos</span></div>'+(pags.length?'<table><thead><tr><th>Aluno</th><th>Data</th><th>Referência</th><th>Forma</th><th>Valor</th></tr></thead><tbody>'+pags.map(p=>{const al=alunos.find(a=>a.id===p.aluno_id);return'<tr><td><strong style="cursor:pointer" onclick="nav('aluno-detalhe','+p.aluno_id+')">'+(al?al.nome:'—')+'</strong></td><td style="font-size:12px">'+fmtDate(p.data_pagamento)+'</td><td style="color:var(--text2)">'+( p.vencimento_referencia||'-')+'</td><td>'+fmtForma(p.forma_pagamento)+'</td><td style="font-weight:600;color:var(--green)">'+fmtMoney(p.valor)+'</td></tr>';}).join('')+'</tbody></table>':'<div class="empty-state">Nenhum pagamento</div>')+'</div>';}
+function openModalAluno(){editingAlunoId=null;document.getElementById('modal-aluno-title').textContent='NOVO ALUNO';['f-nome','f-tel','f-cpf','f-end','f-obs'].forEach(id=>{document.getElementById(id).value='';});document.getElementById('f-nasc').value='';document.getElementById('f-matricula').value=today();document.getElementById('f-validade').value=addDays(today(),30);openModal('modal-aluno');}
+function openEditAluno(id){editingAlunoId=id;const a=(DB.get('alunos')||[]).find(x=>x.id===id);if(!a)return;document.getElementById('modal-aluno-title').textContent='EDITAR ALUNO';document.getElementById('f-nome').value=a.nome;document.getElementById('f-tel').value=a.telefone;document.getElementById('f-cpf').value=a.cpf||'';document.getElementById('f-nasc').value=a.data_nascimento||'';document.getElementById('f-end').value=a.endereco||'';document.getElementById('f-matricula').value=a.data_matricula;document.getElementById('f-validade').value=a.validade_ate;document.getElementById('f-obs').value=a.observacoes||'';openModal('modal-aluno');}
+function salvarAluno(){const nome=document.getElementById('f-nome').value.trim(),tel=document.getElementById('f-tel').value.trim(),val=document.getElementById('f-validade').value;if(!nome||!tel||!val){showToast('Preencha os campos obrigatórios.','error');return;}const alunos=DB.get('alunos')||[];if(editingAlunoId){const idx=alunos.findIndex(a=>a.id===editingAlunoId);if(idx>=0){alunos[idx]={...alunos[idx],nome,telefone:tel,cpf:document.getElementById('f-cpf').value,data_nascimento:document.getElementById('f-nasc').value,endereco:document.getElementById('f-end').value,data_matricula:document.getElementById('f-matricula').value,validade_ate:val,observacoes:document.getElementById('f-obs').value,updated_at:now()};}}else{const id=DB.get('next_aluno_id')||1;alunos.push({id,nome,telefone:tel,cpf:document.getElementById('f-cpf').value,data_nascimento:document.getElementById('f-nasc').value,endereco:document.getElementById('f-end').value,data_matricula:document.getElementById('f-matricula').value||today(),validade_ate:val,observacoes:document.getElementById('f-obs').value,created_at:now(),updated_at:now()});DB.set('next_aluno_id',id+1);}DB.set('alunos',alunos);showToast(editingAlunoId?'Aluno atualizado!':'Aluno cadastrado!','success');closeModal('modal-aluno');nav(currentAlunoId&&editingAlunoId===currentAlunoId?'aluno-detalhe':'alunos',editingAlunoId);}
+function excluirAluno(id){if(!confirm('Excluir este aluno?'))return;DB.set('alunos',(DB.get('alunos')||[]).filter(a=>a.id!==id));DB.set('pagamentos',(DB.get('pagamentos')||[]).filter(p=>p.aluno_id!==id));showToast('Aluno excluído.','success');nav('alunos');}
+function openPagamento(alunoId){pagAlunoId=alunoId;const a=(DB.get('alunos')||[]).find(x=>x.id===alunoId);document.getElementById('p-aluno-nome').value=a?a.nome:'';document.getElementById('p-valor').value='';document.getElementById('p-data').value=today();document.getElementById('p-forma').value='';document.getElementById('p-ref').value='';document.getElementById('p-obs').value='';openModal('modal-pagamento');}
+function salvarPagamento(){const valor=document.getElementById('p-valor').value,data=document.getElementById('p-data').value,forma=document.getElementById('p-forma').value;if(!valor||!data||!forma){showToast('Preencha os campos obrigatórios.','error');return;}const pags=DB.get('pagamentos')||[];const id=DB.get('next_pag_id')||1;pags.push({id,aluno_id:pagAlunoId,valor:parseFloat(valor),forma_pagamento:forma,data_pagamento:data,vencimento_referencia:document.getElementById('p-ref').value,observacoes:document.getElementById('p-obs').value,created_at:now()});DB.set('pagamentos',pags);DB.set('next_pag_id',id+1);let alunos=DB.get('alunos')||[];const idx=alunos.findIndex(a=>a.id===pagAlunoId);if(idx>=0){alunos[idx].validade_ate=addDays(data,30);alunos[idx].updated_at=now();DB.set('alunos',alunos);}showToast('Pagamento lançado! Validade renovada por 30 dias.','success');closeModal('modal-pagamento');if(currentAlunoId===pagAlunoId)nav('aluno-detalhe',pagAlunoId);else nav('alunos');}
+function openModal(id){document.getElementById(id).classList.add('open');}
+function closeModal(id){document.getElementById(id).classList.remove('open');}
+document.addEventListener('click',e=>{if(e.target.classList.contains('modal-overlay'))document.querySelectorAll('.modal-overlay.open').forEach(m=>m.classList.remove('open'));});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')document.querySelectorAll('.modal-overlay.open').forEach(m=>m.classList.remove('open'));});
+let toastTimer;
+function showToast(msg,type='success'){const t=document.getElementById('toast');document.getElementById('toast-msg').textContent=msg;t.className='toast show '+type;clearTimeout(toastTimer);toastTimer=setTimeout(()=>t.classList.remove('show'),3000);}
+initDB();
+</script>
 </body>
-</html>
+                                                                                                                     </html>
