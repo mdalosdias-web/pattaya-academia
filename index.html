@@ -3,399 +3,451 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PATTAYA — Sistema de Academia</title>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<title>PATTAYA</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#0a0a0b;--bg2:#111113;--bg3:#18181b;--border:#2a2a2f;--border2:#3a3a42;--text:#f4f4f5;--text2:#a1a1aa;--text3:#71717a;--accent:#e63946;--green:#22c55e;--yellow:#f59e0b;--red:#ef4444;--blue:#3b82f6;}
+:root{--bg:#0a0a0b;--s1:#111113;--s2:#18181b;--bd:#2a2a2f;--tx:#f4f4f5;--t2:#a1a1aa;--t3:#71717a;--ac:#e63946;--gn:#22c55e;--yw:#f59e0b;--rd:#ef4444;--bl:#3b82f6;}
 *{margin:0;padding:0;box-sizing:border-box;}
-body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min-height:100vh;}
-#login-screen{min-height:100vh;display:flex;align-items:center;justify-content:center;background:var(--bg);position:relative;overflow:hidden;}
-#login-screen::before{content:'PATTAYA';position:absolute;font-family:'Bebas Neue',sans-serif;font-size:30vw;color:rgba(230,57,70,0.04);pointer-events:none;top:50%;left:50%;transform:translate(-50%,-50%);white-space:nowrap;}
-.login-box{background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:48px 40px;width:380px;position:relative;z-index:1;}
-.login-logo{font-family:'Bebas Neue',sans-serif;font-size:48px;color:var(--accent);letter-spacing:4px;margin-bottom:4px;line-height:1;}
-.login-sub{font-size:12px;color:var(--text3);letter-spacing:3px;text-transform:uppercase;margin-bottom:40px;font-weight:500;}
+body{background:var(--bg);color:var(--tx);font-family:'DM Sans',sans-serif;min-height:100vh;}
+#ls{min-height:100vh;display:flex;align-items:center;justify-content:center;}
+.lb{background:var(--s1);border:1px solid var(--bd);border-radius:16px;padding:48px 40px;width:380px;}
+.ll{font-family:'Bebas Neue',sans-serif;font-size:48px;color:var(--ac);letter-spacing:4px;margin-bottom:4px;}
+.lx{font-size:12px;color:var(--t3);letter-spacing:3px;text-transform:uppercase;margin-bottom:40px;}
 .fg{margin-bottom:20px;}
-.fg label{display:block;font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:8px;font-weight:500;}
-.fg input,.fg select,.fg textarea{width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:14px;padding:12px 14px;outline:none;transition:border-color .15s;}
-.fg input:focus,.fg select:focus,.fg textarea:focus{border-color:var(--accent);}
+.fg label{display:block;font-size:11px;color:var(--t3);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:8px;}
+.fg input,.fg select,.fg textarea{width:100%;background:var(--s2);border:1px solid var(--bd);border-radius:8px;color:var(--tx);font-family:'DM Sans',sans-serif;font-size:14px;padding:12px 14px;outline:none;transition:border-color .15s;}
+.fg input:focus,.fg select:focus,.fg textarea:focus{border-color:var(--ac);}
 .fg textarea{resize:vertical;min-height:80px;}
-.fg select{appearance:none;cursor:pointer;}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:none;border-radius:8px;cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:500;font-size:14px;padding:12px 20px;transition:all .15s;text-decoration:none;}
-.btn-primary{background:var(--accent);color:#fff;width:100%;}
-.btn-primary:hover{background:#c1121f;}
-.btn-secondary{background:var(--bg3);color:var(--text2);border:1px solid var(--border);}
-.btn-secondary:hover{color:var(--text);}
-.btn-ghost{background:transparent;color:var(--text2);border:1px solid var(--border);}
-.btn-ghost:hover{color:var(--text);}
-.btn-danger{background:rgba(239,68,68,.15);color:var(--red);border:1px solid rgba(239,68,68,.3);}
-.btn-success{background:rgba(34,197,94,.15);color:var(--green);border:1px solid rgba(34,197,94,.3);}
-.btn-sm{padding:7px 14px;font-size:12px;border-radius:6px;}
-#app{display:none;min-height:100vh;}
-.sidebar{position:fixed;top:0;left:0;width:220px;height:100vh;background:var(--bg2);border-right:1px solid var(--border);display:flex;flex-direction:column;z-index:100;}
-.sl{padding:24px 20px 20px;border-bottom:1px solid var(--border);}
-.sl-t{font-family:'Bebas Neue',sans-serif;font-size:32px;color:var(--accent);letter-spacing:4px;line-height:1;}
-.sl-s{font-size:9px;color:var(--text3);letter-spacing:2px;text-transform:uppercase;margin-top:2px;}
-.nav{flex:1;padding:16px 12px;}
-.ns{font-size:9px;color:var(--text3);letter-spacing:2px;text-transform:uppercase;padding:0 8px;margin:16px 0 6px;font-weight:600;}
-.ni{display:flex;align-items:center;gap:10px;padding:10px;border-radius:8px;cursor:pointer;color:var(--text2);font-size:13px;font-weight:500;transition:all .15s;margin-bottom:2px;border:none;background:none;width:100%;text-align:left;}
-.ni:hover{background:var(--bg3);color:var(--text);}
-.ni.active{background:rgba(230,57,70,.15);color:var(--accent);}
-.su{padding:16px 20px;border-top:1px solid var(--border);display:flex;align-items:center;gap:10px;}
-.ua{width:32px;height:32px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;color:#fff;flex-shrink:0;}
-.main{margin-left:220px;min-height:100vh;}
-.topbar{height:60px;background:var(--bg2);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 28px;gap:16px;position:sticky;top:0;z-index:50;}
-.topbar-t{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:2px;flex:1;}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:none;border-radius:8px;cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:500;font-size:14px;padding:12px 20px;transition:all .15s;}
+.bp{background:var(--ac);color:#fff;width:100%;}
+.bp:hover{background:#c1121f;}
+.bs{background:var(--s2);color:var(--t2);border:1px solid var(--bd);}
+.bg{background:transparent;color:var(--t2);border:1px solid var(--bd);}
+.bg:hover,.bs:hover{color:var(--tx);}
+.bd2{background:rgba(239,68,68,.15);color:var(--rd);border:1px solid rgba(239,68,68,.3);}
+.bk{background:rgba(34,197,94,.15);color:var(--gn);border:1px solid rgba(34,197,94,.3);}
+.bsm{padding:7px 14px;font-size:12px;border-radius:6px;}
+#app{display:none;}
+.sb{position:fixed;top:0;left:0;width:220px;height:100vh;background:var(--s1);border-right:1px solid var(--bd);display:flex;flex-direction:column;z-index:100;}
+.sbl{padding:24px 20px 20px;border-bottom:1px solid var(--bd);}
+.sblt{font-family:'Bebas Neue',sans-serif;font-size:32px;color:var(--ac);letter-spacing:4px;line-height:1;}
+.sbls{font-size:9px;color:var(--t3);letter-spacing:2px;text-transform:uppercase;}
+.nv{flex:1;padding:16px 12px;}
+.nx{font-size:9px;color:var(--t3);letter-spacing:2px;text-transform:uppercase;padding:0 8px;margin:16px 0 6px;}
+.ni{display:flex;align-items:center;gap:10px;padding:10px;border-radius:8px;cursor:pointer;color:var(--t2);font-size:13px;font-weight:500;transition:all .15s;margin-bottom:2px;border:none;background:none;width:100%;text-align:left;}
+.ni:hover{background:var(--s2);color:var(--tx);}
+.ni.ac{background:rgba(230,57,70,.15);color:var(--ac);}
+.sbu{padding:16px 20px;border-top:1px solid var(--bd);display:flex;align-items:center;gap:10px;}
+.av{width:32px;height:32px;border-radius:50%;background:var(--ac);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;color:#fff;flex-shrink:0;}
+.mn{margin-left:220px;min-height:100vh;}
+.tb{height:60px;background:var(--s1);border-bottom:1px solid var(--bd);display:flex;align-items:center;padding:0 28px;gap:16px;position:sticky;top:0;z-index:50;}
+.tbt{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:2px;flex:1;}
 .pc{padding:28px;}
 .sg{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:16px;margin-bottom:28px;}
-.sc{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:20px;}
-.sl2{font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:1.5px;font-weight:600;margin-bottom:8px;}
-.sv{font-family:'Bebas Neue',sans-serif;font-size:40px;line-height:1;color:var(--text);}
-.sv.g{color:var(--green);}.sv.r{color:var(--red);}.sv.y{color:var(--yellow);}.sv.b{color:var(--blue);}
-.tw{background:var(--bg2);border:1px solid var(--border);border-radius:12px;overflow:hidden;}
-.th{padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+.sc{background:var(--s1);border:1px solid var(--bd);border-radius:12px;padding:20px;}
+.sl{font-size:11px;color:var(--t3);text-transform:uppercase;letter-spacing:1.5px;font-weight:600;margin-bottom:8px;}
+.sv{font-family:'Bebas Neue',sans-serif;font-size:40px;line-height:1;}
+.tw{background:var(--s1);border:1px solid var(--bd);border-radius:12px;overflow:hidden;}
+.th{padding:16px 20px;border-bottom:1px solid var(--bd);display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
 .th-t{font-weight:600;font-size:14px;flex:1;}
-.si{background:var(--bg3);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;padding:8px 12px;outline:none;width:220px;}
-.si:focus{border-color:var(--accent);}
+.si{background:var(--s2);border:1px solid var(--bd);border-radius:8px;color:var(--tx);font-family:'DM Sans',sans-serif;font-size:13px;padding:8px 12px;outline:none;width:220px;}
+.si:focus{border-color:var(--ac);}
 .fb{display:flex;gap:6px;}
-.fbn{padding:6px 12px;border-radius:6px;font-size:12px;font-weight:500;cursor:pointer;border:1px solid var(--border);background:transparent;color:var(--text2);transition:all .15s;}
-.fbn.active{background:var(--accent);color:#fff;border-color:var(--accent);}
-.fbn:hover:not(.active){color:var(--text);}
+.fn2{padding:6px 12px;border-radius:6px;font-size:12px;font-weight:500;cursor:pointer;border:1px solid var(--bd);background:transparent;color:var(--t2);transition:all .15s;}
+.fn2.ac{background:var(--ac);color:#fff;border-color:var(--ac);}
+.fn2:hover:not(.ac){color:var(--tx);}
 table{width:100%;border-collapse:collapse;}
-th{padding:12px 20px;text-align:left;font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:1.5px;font-weight:600;border-bottom:1px solid var(--border);}
-td{padding:14px 20px;font-size:13px;border-bottom:1px solid var(--border);vertical-align:middle;}
+th{padding:12px 20px;text-align:left;font-size:11px;color:var(--t3);text-transform:uppercase;letter-spacing:1.5px;font-weight:600;border-bottom:1px solid var(--bd);}
+td{padding:14px 20px;font-size:13px;border-bottom:1px solid var(--bd);vertical-align:middle;}
 tr:last-child td{border-bottom:none;}
-tr:hover td{background:var(--bg3);}
-.badge{display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:20px;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;}
+tr:hover td{background:var(--s2);}
+.badge{display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:20px;font-size:11px;font-weight:600;text-transform:uppercase;}
 .badge::before{content:'';width:6px;height:6px;border-radius:50%;background:currentColor;}
-.ba{background:rgba(34,197,94,.15);color:var(--green);}
-.bv{background:rgba(239,68,68,.15);color:var(--red);}
-.bw{background:rgba(245,158,11,.15);color:var(--yellow);}
+.ba{background:rgba(34,197,94,.15);color:var(--gn);}
+.bv{background:rgba(239,68,68,.15);color:var(--rd);}
+.bw{background:rgba(245,158,11,.15);color:var(--yw);}
 .mo{position:fixed;inset:0;background:rgba(0,0,0,.7);display:none;align-items:center;justify-content:center;z-index:200;padding:20px;}
-.mo.open{display:flex;}
-.modal{background:var(--bg2);border:1px solid var(--border);border-radius:16px;width:100%;max-width:560px;max-height:90vh;overflow-y:auto;padding:28px;}
-.mt{font-family:'Bebas Neue',sans-serif;font-size:26px;letter-spacing:2px;margin-bottom:24px;}
+.mo.op{display:flex;}
+.md{background:var(--s1);border:1px solid var(--bd);border-radius:16px;width:100%;max-width:560px;max-height:90vh;overflow-y:auto;padding:28px;}
+.mt2{font-family:'Bebas Neue',sans-serif;font-size:26px;letter-spacing:2px;margin-bottom:24px;}
 .fr{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
-.mf{display:flex;gap:10px;justify-content:flex-end;margin-top:24px;padding-top:20px;border-top:1px solid var(--border);}
-.dh{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:24px;margin-bottom:20px;display:flex;gap:20px;align-items:flex-start;}
-.dav{width:60px;height:60px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:24px;color:#fff;flex-shrink:0;}
-.dn{font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:2px;}
-.ic{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:20px;}
-.ict{font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:1.5px;font-weight:600;margin-bottom:14px;}
-.ir{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--border);}
-.ir:last-child{border-bottom:none;}
-.es{text-align:center;padding:48px 20px;color:var(--text3);}
-.bc{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--text3);margin-bottom:20px;cursor:pointer;}
-.bc:hover{color:var(--accent);}
-.toast{position:fixed;bottom:24px;right:24px;background:var(--bg3);border:1px solid var(--border2);border-radius:10px;padding:14px 20px;font-size:13px;z-index:999;display:none;align-items:center;gap:10px;min-width:240px;box-shadow:0 8px 32px rgba(0,0,0,.4);}
-.toast.show{display:flex;}
-.toast.success{border-color:var(--green);}
-.toast.error{border-color:var(--red);}
+.mf{display:flex;gap:10px;justify-content:flex-end;margin-top:24px;padding-top:20px;border-top:1px solid var(--bd);}
 .aw{padding:14px 18px;border-radius:10px;margin-bottom:12px;font-size:13px;}
-.aw.warn{background:rgba(245,158,11,.12);border:1px solid rgba(245,158,11,.3);color:#f59e0b;}
-.aw.err{background:rgba(239,68,68,.12);border:1px solid rgba(239,68,68,.3);color:var(--red);}
+.aw.wn{background:rgba(245,158,11,.12);border:1px solid rgba(245,158,11,.3);color:var(--yw);}
+.aw.er{background:rgba(239,68,68,.12);border:1px solid rgba(239,68,68,.3);color:var(--rd);}
+.toast{position:fixed;bottom:24px;right:24px;background:var(--s2);border:1px solid #3a3a42;border-radius:10px;padding:14px 20px;font-size:13px;z-index:999;display:none;align-items:center;gap:10px;min-width:240px;}
+.toast.show{display:flex;}
+.toast.ok{border-color:var(--gn);}
+.toast.no{border-color:var(--rd);}
 </style>
 </head>
 <body>
-<div id="login-screen">
-  <div class="login-box">
-    <div class="login-logo">PATTAYA</div>
-    <div class="login-sub">Sistema de Academia</div>
+<div id="ls">
+  <div class="lb">
+    <div class="ll">PATTAYA</div>
+    <div class="lx">Sistema de Academia</div>
     <div class="fg"><label>Email</label><input type="email" id="lei" value="admin@pattaya.com"></div>
     <div class="fg"><label>Senha</label><input type="password" id="lep" value="123456"></div>
-    <button class="btn btn-primary" onclick="doLogin()">Entrar</button>
-    <p style="font-size:11px;color:var(--text3);margin-top:16px;text-align:center">Demo: admin@pattaya.com / 123456</p>
+    <button class="btn bp" onclick="login()">Entrar</button>
+    <p style="font-size:11px;color:var(--t3);margin-top:16px;text-align:center">admin@pattaya.com / 123456</p>
   </div>
 </div>
 <div id="app">
-  <div class="sidebar">
-    <div class="sl"><div class="sl-t">PATTAYA</div><div class="sl-s">Academia de Luta</div></div>
-    <nav class="nav">
-      <div class="ns">Principal</div>
-      <button class="ni active" onclick="nav('dashboard')" id="nav-dashboard">⚡ Dashboard</button>
-      <div class="ns">Alunos</div>
-      <button class="ni" onclick="nav('alunos')" id="nav-alunos">👥 Alunos</button>
-      <div class="ns">Financeiro</div>
-      <button class="ni" onclick="nav('financeiro')" id="nav-financeiro">💰 Financeiro</button>
+  <div class="sb">
+    <div class="sbl"><div class="sblt">PATTAYA</div><div class="sbls">Academia de Luta</div></div>
+    <nav class="nv">
+      <div class="nx">Principal</div>
+      <button class="ni ac" onclick="pg('dash')" id="n-dash">&#9889; Dashboard</button>
+      <div class="nx">Alunos</div>
+      <button class="ni" onclick="pg('list')" id="n-list">&#128101; Alunos</button>
+      <div class="nx">Financeiro</div>
+      <button class="ni" onclick="pg('fin')" id="n-fin">&#128176; Financeiro</button>
     </nav>
-    <div class="su">
-      <div class="ua" id="sav">A</div>
-      <div><div style="font-size:12px;font-weight:500" id="sun">Admin</div><div style="font-size:11px;color:var(--text3)">Administrador</div></div>
-    </div>
+    <div class="sbu"><div class="av" id="sav">A</div><div><div style="font-size:12px;font-weight:500" id="sun">Admin</div><div style="font-size:11px;color:var(--t3)">Administrador</div></div></div>
   </div>
-  <div class="main">
-    <div class="topbar"><div class="topbar-t" id="tt">DASHBOARD</div><button class="btn btn-ghost btn-sm" onclick="doLogout()">Sair</button></div>
+  <div class="mn">
+    <div class="tb"><div class="tbt" id="tt">DASHBOARD</div><button class="btn bg bsm" onclick="logout()">Sair</button></div>
     <div class="pc" id="pc"></div>
   </div>
 </div>
-<div class="mo" id="ma">
-  <div class="modal">
-    <div class="mt" id="mat">NOVO ALUNO</div>
-    <div class="fr"><div class="fg"><label>Nome *</label><input type="text" id="fn"></div><div class="fg"><label>Telefone *</label><input type="text" id="ft"></div></div>
-    <div class="fr"><div class="fg"><label>CPF</label><input type="text" id="fc"></div><div class="fg"><label>Nascimento</label><input type="date" id="fna"></div></div>
-    <div class="fg"><label>Endereço</label><input type="text" id="fen"></div>
-    <div class="fr"><div class="fg"><label>Matrícula *</label><input type="date" id="fm"></div><div class="fg"><label>Validade *</label><input type="date" id="fv"></div></div>
-    <div class="fg"><label>Observações</label><textarea id="fo"></textarea></div>
-    <div class="mf"><button class="btn btn-ghost" onclick="cm('ma')">Cancelar</button><button class="btn btn-primary" onclick="salvarAluno()">Salvar</button></div>
-  </div>
-</div>
-<div class="mo" id="mp">
-  <div class="modal">
-    <div class="mt">LANÇAR PAGAMENTO</div>
-    <div class="fg"><label>Aluno</label><input type="text" id="pan" readonly style="opacity:.7"></div>
-    <div class="fr"><div class="fg"><label>Valor *</label><input type="number" id="pv" step="0.01" min="0"></div><div class="fg"><label>Data *</label><input type="date" id="pd"></div></div>
-    <div class="fr"><div class="fg"><label>Forma *</label><select id="pf"><option value="">...</option><option value="pix">PIX</option><option value="dinheiro">Dinheiro</option><option value="cartao">Cartão</option><option value="transferencia">Transferência</option></select></div><div class="fg"><label>Referência</label><input type="text" id="pr" placeholder="Março/2026"></div></div>
-    <div class="fg"><label>Observações</label><textarea id="po" style="min-height:60px"></textarea></div>
-    <div class="mf"><button class="btn btn-ghost" onclick="cm('mp')">Cancelar</button><button class="btn btn-success" onclick="salvarPag()">Confirmar</button></div>
-  </div>
-</div>
-<div class="toast" id="toast"><span id="tmsg"></span></div>
+<div class="mo" id="mA"><div class="md">
+  <div class="mt2" id="mAt">NOVO ALUNO</div>
+  <div class="fr"><div class="fg"><label>Nome *</label><input type="text" id="fn"></div><div class="fg"><label>Telefone *</label><input type="text" id="ft"></div></div>
+  <div class="fr"><div class="fg"><label>CPF</label><input type="text" id="fc"></div><div class="fg"><label>Nascimento</label><input type="date" id="fna"></div></div>
+  <div class="fg"><label>Endereco</label><input type="text" id="fen"></div>
+  <div class="fr"><div class="fg"><label>Matricula *</label><input type="date" id="fm"></div><div class="fg"><label>Validade *</label><input type="date" id="fv"></div></div>
+  <div class="fg"><label>Obs</label><textarea id="fo"></textarea></div>
+  <div class="mf"><button class="btn bg" onclick="hm('mA')">Cancelar</button><button class="btn bp" onclick="saveA()">Salvar</button></div>
+</div></div>
+<div class="mo" id="mP"><div class="md">
+  <div class="mt2">LANCAR PAGAMENTO</div>
+  <div class="fg"><label>Aluno</label><input type="text" id="pan" readonly style="opacity:.7"></div>
+  <div class="fr"><div class="fg"><label>Valor *</label><input type="number" id="pv" step="0.01" min="0"></div><div class="fg"><label>Data *</label><input type="date" id="pd"></div></div>
+  <div class="fr"><div class="fg"><label>Forma *</label><select id="pf"><option value="">...</option><option value="pix">PIX</option><option value="din">Dinheiro</option><option value="crt">Cartao</option><option value="trf">Transferencia</option></select></div><div class="fg"><label>Ref</label><input type="text" id="pr" placeholder="Marco/2026"></div></div>
+  <div class="fg"><label>Obs</label><textarea id="po" style="min-height:60px"></textarea></div>
+  <div class="mf"><button class="btn bg" onclick="hm('mP')">Cancelar</button><button class="btn bk" onclick="saveP()">Confirmar</button></div>
+</div></div>
+<div class="toast" id="tst"><span id="tmsg"></span></div>
 <script>
-var DB={get:function(k){try{return JSON.parse(localStorage.getItem('pt_'+k)||'null')}catch(e){return null}},set:function(k,v){localStorage.setItem('pt_'+k,JSON.stringify(v))}};
-function now(){return new Date().toISOString();}
-function today(){return new Date().toISOString().split('T')[0];}
-function addD(s,n){var d=new Date(s);d.setDate(d.getDate()+n);return d.toISOString().split('T')[0];}
-function diffD(a,b){return Math.floor((new Date(a)-new Date(b))/864e5);}
-function fd(s){if(!s)return'-';var p=s.split('-');return p[2]+'/'+p[1]+'/'+p[0];}
-function fm(v){return'R$ '+Number(v).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});}
-function fforma(f){var m={pix:'PIX',dinheiro:'Dinheiro',cartao:'Cartão',transferencia:'Transferência'};return m[f]||f;}
-function calcSt(a){var t=today();if(!a.validade_ate)return'vencido';var d=diffD(a.validade_ate,t);if(d<0)return'vencido';if(d<=7)return'vencendo';return'ativo';}
-function badge(s){var m={ativo:'ba',vencido:'bv',vencendo:'bw'};var l={ativo:'Ativo',vencido:'Vencido',vencendo:'Vencendo'};return'<span class="badge '+(m[s]||'bv')+'">'+(l[s]||s)+'</span>';}
-function initDB(){
-  if(!DB.get('u'))DB.set('u',[{id:1,nome:'Administrador',email:'admin@pattaya.com',senha:'123456',perfil:'admin'}]);
-  var t=today(),ad=addD;
-  if(!DB.get('a'))DB.set('a',[
-    {id:1,nome:'Carlos Rodrigues',telefone:'(44) 99811-2233',cpf:'123.456.789-00',data_nascimento:'1995-03-10',endereco:'Rua das Palmeiras, 45',data_matricula:addD(t,-90),observacoes:'Muay Thai',validade_ate:addD(t,15),created_at:now(),updated_at:now()},
-    {id:2,nome:'Fernanda Lima',telefone:'(44) 98722-5544',cpf:'234.567.890-11',data_nascimento:'1998-07-22',endereco:'Av. Brasil, 200',data_matricula:addD(t,-60),observacoes:'Jiu-Jitsu',validade_ate:addD(t,5),created_at:now(),updated_at:now()},
-    {id:3,nome:'Ricardo Alves',telefone:'(44) 99533-8877',cpf:'345.678.901-22',data_nascimento:'1990-11-05',endereco:'Rua XV, 100',data_matricula:addD(t,-120),observacoes:'Boxe',validade_ate:addD(t,-10),created_at:now(),updated_at:now()},
-    {id:4,nome:'Juliana Santos',telefone:'(44) 98644-3311',cpf:'456.789.012-33',data_nascimento:'2001-05-18',endereco:'Rua das Flores, 33',data_matricula:addD(t,-30),observacoes:'Muay Thai',validade_ate:t,created_at:now(),updated_at:now()}
+var G = {
+  DB: {
+    get: function(k){ try{ return JSON.parse(localStorage.getItem('pt_'+k)||'null'); }catch(e){ return null; } },
+    set: function(k,v){ localStorage.setItem('pt_'+k, JSON.stringify(v)); }
+  },
+  now: function(){ return new Date().toISOString(); },
+  td: function(){ return new Date().toISOString().split('T')[0]; },
+  plus: function(s,n){ var d=new Date(s); d.setDate(d.getDate()+n); return d.toISOString().split('T')[0]; },
+  diff: function(a,b){ return Math.floor((new Date(a)-new Date(b))/864e5); },
+  fmt: function(s){ if(!s)return'-'; var p=s.split('-'); return p[2]+'/'+p[1]+'/'+p[0]; },
+  money: function(v){ return 'R$ '+Number(v).toLocaleString('pt-BR',{minimumFractionDigits:2}); },
+  forma: function(f){ return {pix:'PIX',din:'Dinheiro',crt:'Cartao',trf:'Transferencia'}[f]||f; },
+  st: function(a){
+    if(!a.val) return 'V';
+    var d=G.diff(a.val, G.td());
+    if(d<0) return 'V';
+    if(d<=7) return 'W';
+    return 'A';
+  },
+  badge: function(s){
+    var cls={A:'ba',V:'bv',W:'bw'};
+    var lbl={A:'Ativo',V:'Vencido',W:'Vencendo'};
+    return '<span class="badge '+(cls[s]||'bv')+'">'+(lbl[s]||s)+'</span>';
+  },
+  cu: null, caid: null, eaid: null, paid: null, af: 'T', aq: ''
+};
+
+function initData(){
+  if(!G.DB.get('u')) G.DB.set('u',[{id:1,nm:'Administrador',em:'admin@pattaya.com',pw:'123456'}]);
+  var t=G.td();
+  if(!G.DB.get('al')) G.DB.set('al',[
+    {id:1,nm:'Carlos Rodrigues',tel:'(44) 99811-2233',cpf:'123.456.789-00',nasc:'1995-03-10',end:'Rua das Palmeiras, 45',mat:G.plus(t,-90),obs:'Muay Thai',val:G.plus(t,15)},
+    {id:2,nm:'Fernanda Lima',tel:'(44) 98722-5544',cpf:'234.567.890-11',nasc:'1998-07-22',end:'Av. Brasil, 200',mat:G.plus(t,-60),obs:'Jiu-Jitsu',val:G.plus(t,5)},
+    {id:3,nm:'Ricardo Alves',tel:'(44) 99533-8877',cpf:'345.678.901-22',nasc:'1990-11-05',end:'Rua XV, 100',mat:G.plus(t,-120),obs:'Boxe',val:G.plus(t,-10)},
+    {id:4,nm:'Juliana Santos',tel:'(44) 98644-3311',cpf:'456.789.012-33',nasc:'2001-05-18',end:'Rua das Flores, 33',mat:G.plus(t,-30),obs:'Muay Thai',val:t}
   ]);
-  if(!DB.get('p'))DB.set('p',[
-    {id:1,aluno_id:1,valor:120,forma_pagamento:'pix',data_pagamento:addD(t,-15),vencimento_referencia:'Março/2026',observacoes:'',created_at:now()},
-    {id:2,aluno_id:2,valor:120,forma_pagamento:'dinheiro',data_pagamento:addD(t,-25),vencimento_referencia:'Março/2026',observacoes:'',created_at:now()}
+  if(!G.DB.get('pg')) G.DB.set('pg',[
+    {id:1,aid:1,vl:120,fr:'pix',dt:G.plus(t,-15),rf:'Marco/2026',obs:''},
+    {id:2,aid:2,vl:120,fr:'din',dt:G.plus(t,-25),rf:'Marco/2026',obs:''}
   ]);
-  if(!DB.get('nai'))DB.set('nai',5);
-  if(!DB.get('npi'))DB.set('npi',3);
+  if(!G.DB.get('nai')) G.DB.set('nai',5);
+  if(!G.DB.get('npi')) G.DB.set('npi',3);
 }
-var cu=null,caid=null,eaid=null,paid=null,af='todos',as2='';
-function doLogin(){
-  var e=document.getElementById('lei').value.trim(),p=document.getElementById('lep').value;
-  var users=DB.get('u')||[];
-  var user=null;
-  for(var i=0;i<users.length;i++){if(users[i].email===e&&users[i].senha===p){user=users[i];break;}}
-  if(!user){alert('Email ou senha incorretos.');return;}
-  cu=user;
-  document.getElementById('login-screen').style.display='none';
+
+function login(){
+  var e=document.getElementById('lei').value.trim();
+  var p=document.getElementById('lep').value;
+  var users=G.DB.get('u')||[];
+  var u=null;
+  for(var i=0;i<users.length;i++){ if(users[i].em===e && users[i].pw===p){ u=users[i]; break; } }
+  if(!u){ alert('Email ou senha incorretos.'); return; }
+  G.cu=u;
+  document.getElementById('ls').style.display='none';
   document.getElementById('app').style.display='block';
-  document.getElementById('sun').textContent=user.nome;
-  document.getElementById('sav').textContent=user.nome.charAt(0).toUpperCase();
-  nav('dashboard');
+  document.getElementById('sun').textContent=u.nm;
+  document.getElementById('sav').textContent=u.nm.charAt(0).toUpperCase();
+  pg('dash');
 }
-function doLogout(){cu=null;document.getElementById('login-screen').style.display='flex';document.getElementById('app').style.display='none';}
-function nav(page,param){
-  document.querySelectorAll('.ni').forEach(function(el){el.classList.remove('active');});
-  var el=document.getElementById('nav-'+page.split('-')[0]);
-  if(el)el.classList.add('active');
-  var titles={dashboard:'DASHBOARD',alunos:'ALUNOS',financeiro:'FINANCEIRO','aluno-detalhe':'ALUNO'};
-  document.getElementById('tt').textContent=titles[page]||page.toUpperCase();
+
+function logout(){
+  G.cu=null;
+  document.getElementById('ls').style.display='flex';
+  document.getElementById('app').style.display='none';
+}
+
+function pg(name, param){
+  document.querySelectorAll('.ni').forEach(function(el){ el.classList.remove('ac'); });
+  var el=document.getElementById('n-'+name);
+  if(el) el.classList.add('ac');
+  var titles={dash:'DASHBOARD',list:'ALUNOS',det:'ALUNO',fin:'FINANCEIRO'};
+  document.getElementById('tt').textContent = titles[name]||name.toUpperCase();
   var c=document.getElementById('pc');
-  if(page==='dashboard')rDash(c);
-  else if(page==='alunos')rAlunos(c);
-  else if(page==='aluno-detalhe')rDetalhe(c,param);
-  else if(page==='financeiro')rFin(c);
+  if(name==='dash') rDash(c);
+  else if(name==='list') rList(c);
+  else if(name==='det') rDet(c, param);
+  else if(name==='fin') rFin(c);
 }
+
 function rDash(el){
-  var alunos=DB.get('a')||[];
-  var t=today();
-  var total=alunos.length;
-  var ativos=alunos.filter(function(a){return calcSt(a)==='ativo';}).length;
-  var venc=alunos.filter(function(a){return calcSt(a)==='vencido';}).length;
-  var hoje=alunos.filter(function(a){return a.validade_ate===t;}).length;
-  var sem=alunos.filter(function(a){if(!a.validade_ate)return false;var d=diffD(a.validade_ate,t);return d>=0&&d<=7;}).length;
-  var av=alunos.filter(function(a){return calcSt(a)==='vencendo';});
-  var ax=alunos.filter(function(a){return calcSt(a)==='vencido';});
-  var h='<div class="sg"><div class="sc"><div class="sl2">Total</div><div class="sv">'+total+'</div></div>';
-  h+='<div class="sc"><div class="sl2">Ativos</div><div class="sv g">'+ativos+'</div></div>';
-  h+='<div class="sc"><div class="sl2">Vencidos</div><div class="sv r">'+venc+'</div></div>';
-  h+='<div class="sc"><div class="sl2">Vencem Hoje</div><div class="sv y">'+hoje+'</div></div>';
-  h+='<div class="sc"><div class="sl2">Próx. 7 dias</div><div class="sv b">'+sem+'</div></div></div>';
-  if(av.length)h+='<div class="aw warn">⚠ <strong>'+av.length+' aluno(s)</strong> vencendo em breve: '+av.map(function(a){return'<span style="cursor:pointer;text-decoration:underline" onclick="nav('aluno-detalhe','+a.id+')">'+a.nome+'</span>';}).join(', ')+'</div>';
-  if(ax.length)h+='<div class="aw err">✕ <strong>'+ax.length+' aluno(s)</strong> com mensalidade vencida: '+ax.map(function(a){return'<span style="cursor:pointer;text-decoration:underline" onclick="nav('aluno-detalhe','+a.id+')">'+a.nome+'</span>';}).join(', ')+'</div>';
-  h+='<div class="tw"><div class="th"><span class="th-t">Últimos Alunos</span><button class="btn btn-primary btn-sm" onclick="oMA()">+ Novo Aluno</button></div>';
-  h+='<table><thead><tr><th>Nome</th><th>Telefone</th><th>Validade</th><th>Status</th><th></th></tr></thead><tbody>';
-  var ult=alunos.slice(-5).reverse();
-  for(var i=0;i<ult.length;i++){var a=ult[i];h+='<tr><td><strong>'+a.nome+'</strong></td><td style="color:var(--text2)">'+a.telefone+'</td><td style="font-size:12px">'+fd(a.validade_ate)+'</td><td>'+badge(calcSt(a))+'</td><td><button class="btn btn-ghost btn-sm" onclick="nav('aluno-detalhe','+a.id+')">Ver</button></td></tr>';}
+  var al=G.DB.get('al')||[];
+  var t=G.td();
+  var tot=al.length;
+  var atv=al.filter(function(a){ return G.st(a)==='A'; }).length;
+  var vnc=al.filter(function(a){ return G.st(a)==='V'; }).length;
+  var hj=al.filter(function(a){ return a.val===t; }).length;
+  var sm=al.filter(function(a){ if(!a.val)return false; var d=G.diff(a.val,t); return d>=0&&d<=7; }).length;
+  var aw=al.filter(function(a){ return G.st(a)==='W'; });
+  var av=al.filter(function(a){ return G.st(a)==='V'; });
+  var h='<div class="sg">';
+  h+='<div class="sc"><div class="sl">Total</div><div class="sv">'+tot+'</div></div>';
+  h+='<div class="sc"><div class="sl">Ativos</div><div class="sv" style="color:var(--gn)">'+atv+'</div></div>';
+  h+='<div class="sc"><div class="sl">Vencidos</div><div class="sv" style="color:var(--rd)">'+vnc+'</div></div>';
+  h+='<div class="sc"><div class="sl">Vencem Hoje</div><div class="sv" style="color:var(--yw)">'+hj+'</div></div>';
+  h+='<div class="sc"><div class="sl">Prox 7 dias</div><div class="sv" style="color:var(--bl)">'+sm+'</div></div></div>';
+  if(aw.length) h+='<div class="aw wn">&#9888; <strong>'+aw.length+' aluno(s)</strong> vencendo em breve: '+aw.map(function(a){ return '<span style="cursor:pointer;text-decoration:underline" onclick="pg('det','+a.id+')">'+a.nm+'</span>'; }).join(', ')+'</div>';
+  if(av.length) h+='<div class="aw er">&#10005; <strong>'+av.length+' aluno(s)</strong> com mensalidade vencida: '+av.map(function(a){ return '<span style="cursor:pointer;text-decoration:underline" onclick="pg('det','+a.id+')">'+a.nm+'</span>'; }).join(', ')+'</div>';
+  h+='<div class="tw"><div class="th"><span class="th-t">Ultimos Alunos</span><button class="btn bp bsm" onclick="oA()">+ Novo</button></div>';
+  h+='<table><thead><tr><th>Nome</th><th>Tel</th><th>Validade</th><th>Status</th><th></th></tr></thead><tbody>';
+  var ult=al.slice(-5).reverse();
+  for(var i=0;i<ult.length;i++){
+    var a=ult[i];
+    h+='<tr><td><strong>'+a.nm+'</strong></td><td style="color:var(--t2)">'+a.tel+'</td><td style="font-size:12px">'+G.fmt(a.val)+'</td><td>'+G.badge(G.st(a))+'</td>';
+    h+='<td><button class="btn bg bsm" onclick="pg('det','+a.id+')">Ver</button></td></tr>';
+  }
   h+='</tbody></table></div>';
   el.innerHTML=h;
 }
-function rAlunos(el){
-  el.innerHTML='<div class="tw"><div class="th"><span class="th-t">Alunos</span><input class="si" id="sal" placeholder="Buscar..." value="'+as2+'" oninput="as2=this.value;rAT()"><div class="fb"><button class="fbn '+(af==='todos'?'active':'')+'" onclick="setF('todos')">Todos</button><button class="fbn '+(af==='ativo'?'active':'')+'" onclick="setF('ativo')">Ativos</button><button class="fbn '+(af==='vencendo'?'active':'')+'" onclick="setF('vencendo')">Vencendo</button><button class="fbn '+(af==='vencido'?'active':'')+'" onclick="setF('vencido')">Vencidos</button></div><button class="btn btn-primary btn-sm" onclick="oMA()">+ Novo</button></div><div id="atb"></div></div>';
-  rAT();
+
+function rList(el){
+  el.innerHTML='<div class="tw"><div class="th"><span class="th-t">Alunos</span><input class="si" id="srch" placeholder="Buscar..." value="'+G.aq+'" oninput="G.aq=this.value;rTbl()"><div class="fb"><button class="fn2 '+(G.af==='T'?'ac':'')+'" onclick="sf('T')">Todos</button><button class="fn2 '+(G.af==='A'?'ac':'')+'" onclick="sf('A')">Ativos</button><button class="fn2 '+(G.af==='W'?'ac':'')+'" onclick="sf('W')">Vencendo</button><button class="fn2 '+(G.af==='V'?'ac':'')+'" onclick="sf('V')">Vencidos</button></div><button class="btn bp bsm" onclick="oA()">+ Novo</button></div><div id="tbl"></div></div>';
+  rTbl();
 }
-function setF(f){af=f;rAlunos(document.getElementById('pc'));}
-function rAT(){
-  var alunos=DB.get('a')||[];
-  var q=as2.toLowerCase();
-  if(q)alunos=alunos.filter(function(a){return a.nome.toLowerCase().indexOf(q)>=0||a.telefone.indexOf(q)>=0;});
-  if(af!=='todos')alunos=alunos.filter(function(a){return calcSt(a)===af;});
-  var el=document.getElementById('atb');
-  if(!el)return;
-  if(!alunos.length){el.innerHTML='<div class="es">Nenhum aluno encontrado</div>';return;}
-  var h='<table><thead><tr><th>Nome</th><th>Telefone</th><th>Validade</th><th>Status</th><th>Ações</th></tr></thead><tbody>';
-  for(var i=0;i<alunos.length;i++){
-    var a=alunos[i];
-    h+='<tr><td><strong style="cursor:pointer" onclick="nav('aluno-detalhe','+a.id+')">'+a.nome+'</strong></td>';
-    h+='<td style="color:var(--text2);font-size:12px">'+a.telefone+'</td>';
-    h+='<td style="font-size:12px">'+fd(a.validade_ate)+'</td>';
-    h+='<td>'+badge(calcSt(a))+'</td>';
-    h+='<td style="display:flex;gap:6px"><button class="btn btn-ghost btn-sm" onclick="nav('aluno-detalhe','+a.id+')">Ver</button><button class="btn btn-ghost btn-sm" onclick="oEA('+a.id+')">Editar</button><button class="btn btn-success btn-sm" onclick="oP('+a.id+')">Pagar</button></td></tr>';
+
+function sf(f){ G.af=f; rList(document.getElementById('pc')); }
+
+function rTbl(){
+  var al=G.DB.get('al')||[];
+  var q=G.aq.toLowerCase();
+  if(q) al=al.filter(function(a){ return a.nm.toLowerCase().indexOf(q)>=0 || a.tel.indexOf(q)>=0; });
+  if(G.af!=='T') al=al.filter(function(a){ return G.st(a)===G.af; });
+  var el=document.getElementById('tbl');
+  if(!el) return;
+  if(!al.length){ el.innerHTML='<div style="text-align:center;padding:40px;color:var(--t3)">Nenhum aluno</div>'; return; }
+  var h='<table><thead><tr><th>Nome</th><th>Tel</th><th>Validade</th><th>Status</th><th>Acoes</th></tr></thead><tbody>';
+  for(var i=0;i<al.length;i++){
+    var a=al[i];
+    h+='<tr>';
+    h+='<td><strong style="cursor:pointer" onclick="pg('det','+a.id+')">'+a.nm+'</strong></td>';
+    h+='<td style="color:var(--t2);font-size:12px">'+a.tel+'</td>';
+    h+='<td style="font-size:12px">'+G.fmt(a.val)+'</td>';
+    h+='<td>'+G.badge(G.st(a))+'</td>';
+    h+='<td style="display:flex;gap:6px"><button class="btn bg bsm" onclick="pg('det','+a.id+')">Ver</button><button class="btn bg bsm" onclick="eA('+a.id+')">Editar</button><button class="btn bk bsm" onclick="oP('+a.id+')">Pagar</button></td>';
+    h+='</tr>';
   }
   h+='</tbody></table>';
   el.innerHTML=h;
 }
-function rDetalhe(el,id){
-  caid=id;
-  var alunos=DB.get('a')||[];
+
+function rDet(el, id){
+  G.caid=id;
+  var al=G.DB.get('al')||[];
   var a=null;
-  for(var i=0;i<alunos.length;i++){if(alunos[i].id===id){a=alunos[i];break;}}
-  if(!a){el.innerHTML='<p>Não encontrado.</p>';return;}
-  var pags=(DB.get('p')||[]).filter(function(p){return p.aluno_id===id;}).sort(function(x,y){return y.data_pagamento.localeCompare(x.data_pagamento);});
-  var st=calcSt(a);
-  var diff=a.validade_ate?diffD(a.validade_ate,today()):null;
-  var h='<div class="bc" onclick="nav('alunos')">← Voltar</div>';
-  h+='<div class="dh"><div class="dav">'+a.nome.charAt(0)+'</div><div style="flex:1"><div class="dn">'+a.nome+'</div>';
-  h+='<div style="color:var(--text2);font-size:13px;margin-top:4px">'+a.telefone+(a.cpf?' · '+a.cpf:'')+'</div>';
-  h+='<div style="margin-top:10px;display:flex;gap:8px">'+badge(st);
-  if(diff!==null)h+='<span style="font-size:12px;color:var(--text2)">'+(diff<0?Math.abs(diff)+' dias vencido':diff===0?'Vence hoje!':'Vence em '+diff+' dias')+'</span>';
-  h+='</div></div><div style="display:flex;gap:8px"><button class="btn btn-ghost btn-sm" onclick="oEA('+a.id+')">Editar</button><button class="btn btn-success btn-sm" onclick="oP('+a.id+')">+ Pagar</button><button class="btn btn-danger btn-sm" onclick="exAluno('+a.id+')">Excluir</button></div></div>';
-  h+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px">';
-  h+='<div class="ic"><div class="ict">Dados</div>';
-  h+='<div class="ir"><span style="font-size:12px;color:var(--text2)">Nascimento</span><span style="font-size:13px;font-weight:500">'+fd(a.data_nascimento||'')+'</span></div>';
-  h+='<div class="ir"><span style="font-size:12px;color:var(--text2)">Matrícula</span><span style="font-size:13px;font-weight:500">'+fd(a.data_matricula)+'</span></div>';
-  h+='<div class="ir"><span style="font-size:12px;color:var(--text2)">Validade</span><span style="font-size:13px;font-weight:500">'+fd(a.validade_ate)+'</span></div>';
-  if(a.observacoes)h+='<div class="ir"><span style="font-size:12px;color:var(--text2)">Obs.</span><span style="font-size:12px;text-align:right;max-width:60%">'+a.observacoes+'</span></div>';
-  h+='</div>';
-  var totPag=pags.reduce(function(s,p){return s+Number(p.valor);},0);
-  h+='<div class="ic"><div class="ict">Financeiro</div>';
-  h+='<div class="ir"><span style="font-size:12px;color:var(--text2)">Total Pago</span><span style="font-size:13px;font-weight:500;color:var(--green)">'+fm(totPag)+'</span></div>';
-  h+='<div class="ir"><span style="font-size:12px;color:var(--text2)">Pagamentos</span><span style="font-size:13px;font-weight:500">'+pags.length+'</span></div>';
-  h+='<div class="ir"><span style="font-size:12px;color:var(--text2)">Último</span><span style="font-size:13px;font-weight:500">'+(pags.length?fd(pags[0].data_pagamento):'-')+'</span></div>';
+  for(var i=0;i<al.length;i++){ if(al[i].id===id){ a=al[i]; break; } }
+  if(!a){ el.innerHTML='<p>Nao encontrado.</p>'; return; }
+  var pgs=G.DB.get('pg')||[];
+  var pp=pgs.filter(function(p){ return p.aid===id; }).sort(function(x,y){ return y.dt.localeCompare(x.dt); });
+  var s=G.st(a);
+  var dif=a.val ? G.diff(a.val, G.td()) : null;
+  var h='<div style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--t3);margin-bottom:20px;cursor:pointer" onclick="pg('list')">← Voltar</div>';
+  h+='<div style="background:var(--s1);border:1px solid var(--bd);border-radius:12px;padding:24px;margin-bottom:20px;display:flex;gap:20px;align-items:flex-start">';
+  h+='<div style="width:60px;height:60px;border-radius:50%;background:var(--ac);display:flex;align-items:center;justify-content:center;font-family:Bebas Neue,sans-serif;font-size:24px;color:#fff;flex-shrink:0">'+a.nm.charAt(0)+'</div>';
+  h+='<div style="flex:1"><div style="font-family:Bebas Neue,sans-serif;font-size:28px;letter-spacing:2px">'+a.nm+'</div>';
+  h+='<div style="color:var(--t2);font-size:13px;margin-top:4px">'+a.tel+(a.cpf?' - '+a.cpf:'')+'</div>';
+  h+='<div style="margin-top:10px;display:flex;gap:8px">'+G.badge(s);
+  if(dif!==null) h+='<span style="font-size:12px;color:var(--t2)">'+(dif<0?Math.abs(dif)+' dias vencido':dif===0?'Vence hoje!':'Vence em '+dif+' dias')+'</span>';
   h+='</div></div>';
-  h+='<div class="tw"><div class="th"><span class="th-t">Histórico de Pagamentos</span></div>';
-  if(pags.length){
-    h+='<table><thead><tr><th>Data</th><th>Referência</th><th>Forma</th><th>Valor</th></tr></thead><tbody>';
-    for(var i=0;i<pags.length;i++){var p=pags[i];h+='<tr><td style="font-size:12px">'+fd(p.data_pagamento)+'</td><td style="color:var(--text2)">'+( p.vencimento_referencia||'-')+'</td><td>'+fforma(p.forma_pagamento)+'</td><td style="font-weight:600;color:var(--green)">'+fm(p.valor)+'</td></tr>';}
-    h+='</tbody></table>';
-  }else{h+='<div class="es">Nenhum pagamento</div>';}
+  h+='<div style="display:flex;gap:8px"><button class="btn bg bsm" onclick="eA('+a.id+')">Editar</button><button class="btn bk bsm" onclick="oP('+a.id+')">+ Pagar</button><button class="btn bd2 bsm" onclick="delA('+a.id+')">Excluir</button></div></div>';
+  h+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px">';
+  h+='<div style="background:var(--s1);border:1px solid var(--bd);border-radius:12px;padding:20px">';
+  h+='<div style="font-size:11px;color:var(--t3);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:14px">Dados</div>';
+  var rows=[['Nascimento',G.fmt(a.nasc||'')],['Matricula',G.fmt(a.mat)],['Validade',G.fmt(a.val)],['Obs',a.obs||'-']];
+  for(var i=0;i<rows.length;i++){
+    h+='<div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--bd)"><span style="font-size:12px;color:var(--t2)">'+rows[i][0]+'</span><span style="font-size:13px;font-weight:500">'+rows[i][1]+'</span></div>';
+  }
   h+='</div>';
-  el.innerHTML=h;
-}
-function rFin(el){
-  var pags=(DB.get('p')||[]).sort(function(a,b){return b.data_pagamento.localeCompare(a.data_pagamento);});
-  var alunos=DB.get('a')||[];
-  var total=pags.reduce(function(s,p){return s+Number(p.valor);},0);
-  var mes=new Date();
-  var pagsMes=pags.filter(function(p){var d=new Date(p.data_pagamento);return d.getMonth()===mes.getMonth()&&d.getFullYear()===mes.getFullYear();});
-  var h='<div class="sg" style="margin-bottom:24px">';
-  h+='<div class="sc"><div class="sl2">Mês Atual</div><div class="sv g" style="font-size:28px">'+fm(pagsMes.reduce(function(s,p){return s+Number(p.valor);},0))+'</div></div>';
-  h+='<div class="sc"><div class="sl2">Total Geral</div><div class="sv b" style="font-size:28px">'+fm(total)+'</div></div>';
-  h+='<div class="sc"><div class="sl2">Pagamentos</div><div class="sv">'+pags.length+'</div></div></div>';
-  h+='<div class="tw"><div class="th"><span class="th-t">Todos os Pagamentos</span></div>';
-  if(pags.length){
-    h+='<table><thead><tr><th>Aluno</th><th>Data</th><th>Referência</th><th>Forma</th><th>Valor</th></tr></thead><tbody>';
-    for(var i=0;i<pags.length;i++){
-      var p=pags[i];
-      var al=null;
-      var aa=alunos;
-      for(var j=0;j<aa.length;j++){if(aa[j].id===p.aluno_id){al=aa[j];break;}}
-      h+='<tr><td><strong style="cursor:pointer" onclick="nav('aluno-detalhe','+p.aluno_id+')">'+(al?al.nome:'—')+'</strong></td><td style="font-size:12px">'+fd(p.data_pagamento)+'</td><td style="color:var(--text2)">'+( p.vencimento_referencia||'-')+'</td><td>'+fforma(p.forma_pagamento)+'</td><td style="font-weight:600;color:var(--green)">'+fm(p.valor)+'</td></tr>';
+  var tot=pp.reduce(function(s,p){ return s+Number(p.vl); },0);
+  h+='<div style="background:var(--s1);border:1px solid var(--bd);border-radius:12px;padding:20px">';
+  h+='<div style="font-size:11px;color:var(--t3);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:14px">Financeiro</div>';
+  var rows2=[['Total Pago','<span style="color:var(--gn)">'+G.money(tot)+'</span>'],['Pagamentos',''+pp.length],['Ultimo',pp.length?G.fmt(pp[0].dt):'-']];
+  for(var i=0;i<rows2.length;i++){
+    h+='<div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--bd)"><span style="font-size:12px;color:var(--t2)">'+rows2[i][0]+'</span><span style="font-size:13px;font-weight:500">'+rows2[i][1]+'</span></div>';
+  }
+  h+='</div></div>';
+  h+='<div class="tw"><div class="th"><span class="th-t">Historico de Pagamentos</span></div>';
+  if(pp.length){
+    h+='<table><thead><tr><th>Data</th><th>Ref</th><th>Forma</th><th>Valor</th></tr></thead><tbody>';
+    for(var i=0;i<pp.length;i++){
+      var p=pp[i];
+      h+='<tr><td style="font-size:12px">'+G.fmt(p.dt)+'</td><td style="color:var(--t2)">'+(p.rf||'-')+'</td><td>'+G.forma(p.fr)+'</td><td style="font-weight:600;color:var(--gn)">'+G.money(p.vl)+'</td></tr>';
     }
     h+='</tbody></table>';
-  }else{h+='<div class="es">Nenhum pagamento</div>';}
+  } else { h+='<div style="text-align:center;padding:40px;color:var(--t3)">Nenhum pagamento</div>'; }
   h+='</div>';
   el.innerHTML=h;
 }
-function oMA(){eaid=null;document.getElementById('mat').textContent='NOVO ALUNO';document.getElementById('fn').value='';document.getElementById('ft').value='';document.getElementById('fc').value='';document.getElementById('fna').value='';document.getElementById('fen').value='';document.getElementById('fm').value=today();document.getElementById('fv').value=addD(today(),30);document.getElementById('fo').value='';om('ma');}
-function oEA(id){
-  eaid=id;
-  var a=(DB.get('a')||[]).filter(function(x){return x.id===id;})[0];
-  if(!a)return;
-  document.getElementById('mat').textContent='EDITAR ALUNO';
-  document.getElementById('fn').value=a.nome;
-  document.getElementById('ft').value=a.telefone;
-  document.getElementById('fc').value=a.cpf||'';
-  document.getElementById('fna').value=a.data_nascimento||'';
-  document.getElementById('fen').value=a.endereco||'';
-  document.getElementById('fm').value=a.data_matricula;
-  document.getElementById('fv').value=a.validade_ate;
-  document.getElementById('fo').value=a.observacoes||'';
-  om('ma');
+
+function rFin(el){
+  var pgs=G.DB.get('pg')||[];
+  var al=G.DB.get('al')||[];
+  pgs=pgs.sort(function(a,b){ return b.dt.localeCompare(a.dt); });
+  var tot=pgs.reduce(function(s,p){ return s+Number(p.vl); },0);
+  var mes=new Date();
+  var pm=pgs.filter(function(p){ var d=new Date(p.dt); return d.getMonth()===mes.getMonth()&&d.getFullYear()===mes.getFullYear(); });
+  var h='<div class="sg" style="margin-bottom:24px">';
+  h+='<div class="sc"><div class="sl">Mes Atual</div><div class="sv" style="font-size:28px;color:var(--gn)">'+G.money(pm.reduce(function(s,p){ return s+Number(p.vl); },0))+'</div></div>';
+  h+='<div class="sc"><div class="sl">Total</div><div class="sv" style="font-size:28px;color:var(--bl)">'+G.money(tot)+'</div></div>';
+  h+='<div class="sc"><div class="sl">Pagamentos</div><div class="sv">'+pgs.length+'</div></div></div>';
+  h+='<div class="tw"><div class="th"><span class="th-t">Pagamentos</span></div>';
+  if(pgs.length){
+    h+='<table><thead><tr><th>Aluno</th><th>Data</th><th>Ref</th><th>Forma</th><th>Valor</th></tr></thead><tbody>';
+    for(var i=0;i<pgs.length;i++){
+      var p=pgs[i];
+      var nm='—';
+      for(var j=0;j<al.length;j++){ if(al[j].id===p.aid){ nm=al[j].nm; break; } }
+      h+='<tr><td><strong style="cursor:pointer" onclick="pg('det','+p.aid+')">'+nm+'</strong></td>';
+      h+='<td style="font-size:12px">'+G.fmt(p.dt)+'</td><td style="color:var(--t2)">'+(p.rf||'-')+'</td>';
+      h+='<td>'+G.forma(p.fr)+'</td><td style="font-weight:600;color:var(--gn)">'+G.money(p.vl)+'</td></tr>';
+    }
+    h+='</tbody></table>';
+  } else { h+='<div style="text-align:center;padding:40px;color:var(--t3)">Nenhum pagamento</div>'; }
+  h+='</div>';
+  el.innerHTML=h;
 }
-function salvarAluno(){
-  var nome=document.getElementById('fn').value.trim();
+
+function oA(){
+  G.eaid=null;
+  document.getElementById('mAt').textContent='NOVO ALUNO';
+  ['fn','ft','fc','fen','fo'].forEach(function(x){ document.getElementById(x).value=''; });
+  document.getElementById('fna').value='';
+  document.getElementById('fm').value=G.td();
+  document.getElementById('fv').value=G.plus(G.td(),30);
+  sm('mA');
+}
+function eA(id){
+  G.eaid=id;
+  var al=G.DB.get('al')||[];
+  var a=null;
+  for(var i=0;i<al.length;i++){ if(al[i].id===id){ a=al[i]; break; } }
+  if(!a) return;
+  document.getElementById('mAt').textContent='EDITAR ALUNO';
+  document.getElementById('fn').value=a.nm;
+  document.getElementById('ft').value=a.tel;
+  document.getElementById('fc').value=a.cpf||'';
+  document.getElementById('fna').value=a.nasc||'';
+  document.getElementById('fen').value=a.end||'';
+  document.getElementById('fm').value=a.mat;
+  document.getElementById('fv').value=a.val;
+  document.getElementById('fo').value=a.obs||'';
+  sm('mA');
+}
+function saveA(){
+  var nm=document.getElementById('fn').value.trim();
   var tel=document.getElementById('ft').value.trim();
   var val=document.getElementById('fv').value;
-  if(!nome||!tel||!val){toast('Preencha os campos obrigatórios.','error');return;}
-  var alunos=DB.get('a')||[];
-  if(eaid){
-    for(var i=0;i<alunos.length;i++){
-      if(alunos[i].id===eaid){
-        alunos[i].nome=nome;alunos[i].telefone=tel;alunos[i].cpf=document.getElementById('fc').value;
-        alunos[i].data_nascimento=document.getElementById('fna').value;alunos[i].endereco=document.getElementById('fen').value;
-        alunos[i].data_matricula=document.getElementById('fm').value;alunos[i].validade_ate=val;
-        alunos[i].observacoes=document.getElementById('fo').value;alunos[i].updated_at=now();break;
+  if(!nm||!tel||!val){ tst('Preencha os campos obrigatorios.','no'); return; }
+  var al=G.DB.get('al')||[];
+  if(G.eaid){
+    for(var i=0;i<al.length;i++){
+      if(al[i].id===G.eaid){
+        al[i].nm=nm; al[i].tel=tel; al[i].cpf=document.getElementById('fc').value;
+        al[i].nasc=document.getElementById('fna').value; al[i].end=document.getElementById('fen').value;
+        al[i].mat=document.getElementById('fm').value; al[i].val=val;
+        al[i].obs=document.getElementById('fo').value;
+        break;
       }
     }
-  }else{
-    var id=DB.get('nai')||1;
-    alunos.push({id:id,nome:nome,telefone:tel,cpf:document.getElementById('fc').value,data_nascimento:document.getElementById('fna').value,endereco:document.getElementById('fen').value,data_matricula:document.getElementById('fm').value||today(),validade_ate:val,observacoes:document.getElementById('fo').value,created_at:now(),updated_at:now()});
-    DB.set('nai',id+1);
+  } else {
+    var id=G.DB.get('nai')||1;
+    al.push({id:id,nm:nm,tel:tel,cpf:document.getElementById('fc').value,nasc:document.getElementById('fna').value,end:document.getElementById('fen').value,mat:document.getElementById('fm').value||G.td(),val:val,obs:document.getElementById('fo').value});
+    G.DB.set('nai',id+1);
   }
-  DB.set('a',alunos);
-  toast(eaid?'Aluno atualizado!':'Aluno cadastrado!','success');
-  cm('ma');
-  nav(caid&&eaid===caid?'aluno-detalhe':'alunos',eaid);
+  G.DB.set('al',al);
+  tst(G.eaid?'Aluno atualizado!':'Aluno cadastrado!','ok');
+  hm('mA');
+  pg(G.caid&&G.eaid===G.caid?'det':'list', G.eaid);
 }
-function exAluno(id){
-  if(!confirm('Excluir este aluno?'))return;
-  DB.set('a',(DB.get('a')||[]).filter(function(a){return a.id!==id;}));
-  DB.set('p',(DB.get('p')||[]).filter(function(p){return p.aluno_id!==id;}));
-  toast('Aluno excluído.','success');
-  nav('alunos');
+function delA(id){
+  if(!confirm('Excluir este aluno?')) return;
+  G.DB.set('al',(G.DB.get('al')||[]).filter(function(a){ return a.id!==id; }));
+  G.DB.set('pg',(G.DB.get('pg')||[]).filter(function(p){ return p.aid!==id; }));
+  tst('Aluno excluido.','ok');
+  pg('list');
 }
-function oP(alunoId){
-  paid=alunoId;
-  var a=(DB.get('a')||[]).filter(function(x){return x.id===alunoId;})[0];
-  document.getElementById('pan').value=a?a.nome:'';
+function oP(aid){
+  G.paid=aid;
+  var al=G.DB.get('al')||[];
+  var nm='';
+  for(var i=0;i<al.length;i++){ if(al[i].id===aid){ nm=al[i].nm; break; } }
+  document.getElementById('pan').value=nm;
   document.getElementById('pv').value='';
-  document.getElementById('pd').value=today();
+  document.getElementById('pd').value=G.td();
   document.getElementById('pf').value='';
   document.getElementById('pr').value='';
   document.getElementById('po').value='';
-  om('mp');
+  sm('mP');
 }
-function salvarPag(){
-  var valor=document.getElementById('pv').value;
-  var data=document.getElementById('pd').value;
-  var forma=document.getElementById('pf').value;
-  if(!valor||!data||!forma){toast('Preencha os campos obrigatórios.','error');return;}
-  var pags=DB.get('p')||[];
-  var id=DB.get('npi')||1;
-  pags.push({id:id,aluno_id:paid,valor:parseFloat(valor),forma_pagamento:forma,data_pagamento:data,vencimento_referencia:document.getElementById('pr').value,observacoes:document.getElementById('po').value,created_at:now()});
-  DB.set('p',pags);DB.set('npi',id+1);
-  var alunos=DB.get('a')||[];
-  for(var i=0;i<alunos.length;i++){if(alunos[i].id===paid){alunos[i].validade_ate=addD(data,30);alunos[i].updated_at=now();break;}}
-  DB.set('a',alunos);
-  toast('Pagamento lançado! Validade renovada por 30 dias.','success');
-  cm('mp');
-  if(caid===paid)nav('aluno-detalhe',paid);else nav('alunos');
+function saveP(){
+  var vl=document.getElementById('pv').value;
+  var dt=document.getElementById('pd').value;
+  var fr=document.getElementById('pf').value;
+  if(!vl||!dt||!fr){ tst('Preencha os campos obrigatorios.','no'); return; }
+  var pgs=G.DB.get('pg')||[];
+  var id=G.DB.get('npi')||1;
+  pgs.push({id:id,aid:G.paid,vl:parseFloat(vl),fr:fr,dt:dt,rf:document.getElementById('pr').value,obs:document.getElementById('po').value});
+  G.DB.set('pg',pgs);
+  G.DB.set('npi',id+1);
+  var al=G.DB.get('al')||[];
+  for(var i=0;i<al.length;i++){
+    if(al[i].id===G.paid){ al[i].val=G.plus(dt,30); break; }
+  }
+  G.DB.set('al',al);
+  tst('Pagamento lancado! Validade renovada 30 dias.','ok');
+  hm('mP');
+  if(G.caid===G.paid) pg('det',G.paid);
+  else pg('list');
 }
-function om(id){document.getElementById(id).classList.add('open');}
-function cm(id){document.getElementById(id).classList.remove('open');}
-document.addEventListener('click',function(e){if(e.target.classList.contains('mo'))document.querySelectorAll('.mo.open').forEach(function(m){m.classList.remove('open');});});
-document.addEventListener('keydown',function(e){if(e.key==='Escape')document.querySelectorAll('.mo.open').forEach(function(m){m.classList.remove('open');});});
-var toastT;
-function toast(msg,type){var t=document.getElementById('toast');document.getElementById('tmsg').textContent=msg;t.className='toast show '+(type||'success');clearTimeout(toastT);toastT=setTimeout(function(){t.classList.remove('show');},3000);}
-initDB();
+function sm(id){ document.getElementById(id).classList.add('op'); }
+function hm(id){ document.getElementById(id).classList.remove('op'); }
+document.addEventListener('click',function(e){ if(e.target.classList.contains('mo')) document.querySelectorAll('.mo.op').forEach(function(m){ m.classList.remove('op'); }); });
+document.addEventListener('keydown',function(e){ if(e.key==='Escape') document.querySelectorAll('.mo.op').forEach(function(m){ m.classList.remove('op'); }); });
+var TT;
+function tst(msg,tp){
+  var t=document.getElementById('tst');
+  document.getElementById('tmsg').textContent=msg;
+  t.className='toast show '+(tp||'ok');
+  clearTimeout(TT);
+  TT=setTimeout(function(){ t.classList.remove('show'); },3000);
+}
+initData();
 </script>
 </body>
-                      </html>
+  </html>
